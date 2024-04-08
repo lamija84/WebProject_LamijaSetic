@@ -1,0 +1,267 @@
+
+<style>
+  /* Image container */
+  .image-container {
+      text-align: center;
+  }
+
+  /* Responsive image */
+  .responsive-image {
+      max-width: 100%;
+      height: auto;
+  }
+</style>
+<section id="doctors1" class="doctors section-bg">
+  <div class="container" data-aos="fade-up">
+
+    <div class="section-title">
+      <h2>Doctors</h2>
+      <p>Meet the skilled and compassionate team of professionals at our ordination, where our dedicated doctors bring expertise and a patient-centric approach to every aspect of your dental care. Our team is comprised of specialists in various fields, ensuring that you receive the highest standard of personalized treatment.</p>
+    </div>
+
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+            <div class="member" data-aos="fade-up" data-aos-delay="100">
+              <div class="member-img">
+                <img src="assets/img/doctors/doctors-1.jpg" class="img-fluid" alt="">
+                <!--<div class="social">
+                   <a href=""><i class="bi bi-plus"></i></a>
+                </div>-->
+              </div>
+              <div class="member-info">
+                <h4>Orhan Bakal</h4>
+                <span>Endodontist</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+            <div class="member" data-aos="fade-up" data-aos-delay="200">
+              <div class="member-img">
+                <img src="assets/img/doctors/doctors-2.jpg" class="img-fluid" alt="">
+                <!--<div class="social">
+                  <a href=""><i class="bi bi-plus"></i></a>
+                </div>-->
+              </div>
+              <div class="member-info">
+                <h4>Edisa Šetić</h4>
+                <span>Implantologist</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+            <div class="member" data-aos="fade-up" data-aos-delay="300">
+              <div class="member-img">
+                <img src="assets/img/doctors/doctors-3.jpg" class="img-fluid" alt="">
+                <!--<div class="social">
+                   <a href=""><i class="bi bi-plus"></i></a>
+                </div>-->
+              </div>
+              <div class="member-info">
+                <h4>Sead Musić</h4>
+                <span>Prosthodontist</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+            <div class="member" data-aos="fade-up" data-aos-delay="400">
+              <div class="member-img">
+                <img src="assets/img/doctors/doctors-4.jpg" class="img-fluid" alt="">
+                <!--<div class="social">
+                  <a href=""><i class="bi bi-plus"></i></a>
+                </div>-->
+              </div>
+              <div class="member-info">
+                <h4>Amina Šetić</h4>
+                <span>Periodontist</span>
+              </div>
+            </div>
+          </div>
+
+          
+         <!-- Image container 
+          <div class="image-container">
+        
+               "+" button with data-toggle and data-target attributes 
+          </div>
+
+           Button trigger modal 
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  +
+</button>
+
+ Modal 
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Staff organization</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        This will be the modal for editing doctors' state.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>-->
+
+  <style>
+    /* Stilovi za ljepši izgled tabele */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    tr:hover {
+        background-color: #f2f2f2;
+    }
+</style>
+</head>
+<body>
+<div class="horizontalgap" style ="height:40px"></div> <!--for horizontal space-->
+<div class="form-outline mb-4">
+    <input type="text" class="form-control" id="datatable-search-input" onkeyup="searchTable()" placeholder="Search doctors...">
+    <!--<label class="form-label" for="datatable-search-input"></label>-->
+</div>
+
+<table id="datatable">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Department</th>
+            <th>Selected</th>
+        </tr>
+    </thead>
+    <tbody id="doctor-data">
+        <!-- Doctors data will be inserted here dynamically -->
+    </tbody>
+</table>
+
+<div class="horizontalgap" style ="height:40px"></div> <!--for horizontal space-->
+<button onclick="showForm()">Add doctor</button>
+<button onclick="deleteSelected()" id="delete-selected">Delete selected</button>
+<div class="horizontalgap" style ="height:40px"></div> <!--for horizontal space-->
+<div id="form-overlay" class="overlay">
+    <div class="form-container">
+        <h3>Add new doctor</h3>
+        <label for="new-doctor-name">Name:</label>
+        <input type="text" id="new-doctor-name"><br><br>
+        <label for="new-doctor-surname">Surname:</label>
+        <input type="text" id="new-doctor-surname"><br><br>
+        <label for="new-doctor-department">Department:</label>
+        <input type="text" id="new-doctor-department"><br><br>
+        <button onclick="addDoctor()">Add doctor</button>
+        <button onclick="hideForm()">Cancel</button>
+    </div>
+</div>
+
+<script>
+function searchTable() {
+  
+    // Implementacija funkcije za pretragu tabele
+    
+    $.each(data, function(index, element) {
+    // Ovdje možete izvršiti željene operacije s elementom
+    console.log("Element " + index + ":", element);
+});
+
+    
+    let doctors = localStorage.getItem("doctors")
+    
+}
+
+function showForm() {
+    document.getElementById("form-overlay").style.display = "block";
+}
+
+function hideForm() {
+    document.getElementById("form-overlay").style.display = "none";
+}
+
+function addDoctor() {
+    var name = document.getElementById("new-doctor-name").value;
+    var surname = document.getElementById("new-doctor-surname").value;
+    if (name && surname) {
+        // This is where you would make an AJAX call to save the new doctor to your server-side database
+        // For demonstration purposes, let's just log the new doctor's name and surname
+        console.log("Added doctor:", name, surname);
+        hideForm();
+    } else {
+        alert("Please enter name and surname of doctor.");
+    }
+}
+
+function deleteSelected() {
+    // Implementacija funkcije za brisanje selektovanih redova
+ 
+    $("#datatable input:checkbox").each(function() {
+            if (this.checked) {
+                $(this).parent().parent().remove();
+            }
+        });
+ 
+};
+
+    $.ajax({
+    type: "GET",
+    url: "data/doctors.json",
+    dataType: "json",
+    success: function(data) {
+        /*searchTable(data);
+        localStorage.setItem("doctors", JSON.stringify(data)); // Optionally save data to localStorage*/
+    },
+    error: function() {
+        alert("json not found");
+    }
+});
+$.ajax({
+    type: "GET",
+    url: "data/doctors.json",
+    dataType: "json",
+    success: function(data) {
+      displayDoctors(data);
+      /*localStorage.setItem("doctors", data)
+      $('#searchInput').on('input', function() {
+                var query = $(this).val();
+                searchTable(query, data);
+            });*/
+        },
+        error: function() {
+            alert("json not found.");
+        }
+    });
+  
+function displayDoctors(doctors) {
+  const table = document.getElementById('doctor-data');
+  doctors.forEach(doctor => {
+      const newRow = table.insertRow();
+      newRow.innerHTML = `<td>${doctor.id}</td><td>${doctor.name}</td><td>${doctor.surname}</td><td>${doctor.department}</td><td><input type='checkbox'></td>`;
+  });
+}
+</script>
+
+</body>
+
+</section><!-- End doctors Section -->
+      
+          
+<!-- <script>
+ $("#open-modal").click(function(){
+  console.log('jjj')
+  $("#exampleModal").show()
+ });
+ 
+ </script>-->

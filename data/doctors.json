@@ -1,0 +1,28 @@
+[
+    {   "id": 1,
+        "name": "Orhan",
+        "surname": "Bakal",
+        "department": "Endodontics",
+        "image": "doctors-1.png"
+    },
+    {   "id": 2,
+        "name": "Sead",
+        "surname": "Musić",
+        "department": "Implantology",
+        "image": "doctors-3.png"
+    },
+    {
+        "id": 3,
+        "name": "Edisa",
+        "surname": "Šetić",
+        "department": "Prosthetics",
+        "image": "doctors-2.png"
+    },
+    {
+        "id": 4,
+        "name": "Amina",
+        "surname": "Šetić",
+        "department": "Periodontology",
+        "image": "doctors-4.png"
+    }
+]
