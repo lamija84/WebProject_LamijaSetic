@@ -68,7 +68,7 @@
         </div>
         <div class="row">
           <div class="col text-end mt-2">
-            <button type="submit" class="btn btn-success btn-lg px-3">
+            <button onclick="addContact()"  class="btn btn-success btn-lg px-3">
               Submit
             </button>
           </div>
@@ -78,88 +78,7 @@
     </div>
   </div>
   <!-- End Contact -->
-  
-  <!-- Start Script 
-  <script src="../assets/js/jquery-3.7.1.js"></script>
-  <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="../assets/js/custom.js"></script>
-  <script src="../assets/js/jquery-blockUI.js"></script>
-  <script src="../assets/js/jquery.validate.js"></script>
-  <script src="../assets/js/contact.js"></script>-->
-  <!-- End Script -->
-  
-    <!-- ======= Contact Section ======= 
-  <section id="contact" class="contact">
-    <div class="container">
-  
-      <div class="section-title">
-        <h2>Contact</h2>
-        
-      </div>
-  
-    </div>
-  
-    <div class="container">
-  
-      <div class="row mt-5">
-  
-        <div class="col-lg-6">
-  
-          <div class="row">
-            <div class="col-md-12">
-              <div class="info-box">
-                <i class="bx bx-map"></i>
-                <h3>Our Address</h3>
-                <p>Kemala Kapetanovića 36, 71000, Sarajevo </p>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="info-box mt-4">
-                <i class="bx bx-envelope"></i>
-                <h3>Email Us</h3>
-                <p>info@setic.ba<br>ordinacija@setic.ba</p>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="info-box mt-4">
-                <i class="bx bx-phone-call"></i>
-                <h3>Call Us</h3>
-                <p>+387 33 647 990<br>+387 62 112 888</p>
-              </div>
-            </div>
-          </div>
-  
-        </div>
-  
-        <div class="col-lg-6">
-          <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-            <div class="row">
-              <div class="col-md-6 form-group">
-                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required="">
-              </div>
-              <div class="col-md-6 form-group mt-3 mt-md-0">
-                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required="">
-              </div>
-            </div>
-            <div class="form-group mt-3">
-              <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required="">
-            </div>
-            <div class="form-group mt-3">
-              <textarea class="form-control" name="message" rows="7" placeholder="Message" required=""></textarea>
-            </div>
-            <div class="my-3">
-              <div class="loading">Loading</div>
-              <div class="error-message"></div>
-              <div class="sent-message">Your message has been sent. Thank you!</div>
-            </div>
-            <div class="text-center"><button type="submit">Send Message</button></div>
-          </form>
-        </div>
-  
-      </div>
-  
-    </div>
-  </section>--><!-- End Contact Section -->
+
      <!-- ======= Frequently Asked Questioins Section ======= -->
      <section id="faq" class="faq section-bg">
       <div class="container" data-aos="fade-up">
@@ -210,11 +129,49 @@
   
       </div>
     </section><!-- End Frequently Asked Questioins Section -->
-    <!--
-    <script src="../assets/js/jquery-3.7.1.js"></script>
-    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets/js/custom.js"></script>
-    <script src="../assets/js/jquery-blockUI.js"></script>
-    <script src="../assets/js/jquery.validate.js"></script>
-    <script src="../assets/js/contact.js"></script>-->
-   
+    
+<script>
+   function addContact() {
+    var name = document.getElementById("name").value;
+    var email = document.getElementById("email").value;
+	var subject = document.getElementById("subject").value;
+    var message = document.getElementById("message").value;
+    if (name && email) {
+         
+		var ContactData = {
+            name: name,
+            email: email,
+			subject:subject,
+			message:message   };
+		var jsonData = JSON.stringify(ContactData);
+		$.ajax({
+            type: "POST",
+            url: "rest/contacts/add", 
+            contentType: "application/json",
+            data: jsonData,
+            dataType: "json",
+            success: function(response) {
+                if (response.success) {
+                    
+					alert("UPISANO");
+		         } else {
+                 
+                    console.error("Error adding :", response.error);
+                 
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX error:", error);
+                
+            }
+        });
+        console.log("Added :", name,email );
+        hideForm();
+		
+    } else {
+        alert("Please enter name and email.");
+    }
+	location.reload(true);
+}
+
+</script>

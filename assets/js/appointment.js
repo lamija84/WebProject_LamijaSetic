@@ -10,20 +10,15 @@ $("#appointment-form").validate({
             required: true,
             email: true
         },
-        "appointment-subject": {
-            required: true
-        },
+        
         "appointment-date": {
             required: true,
             dateISO: true
         },
         "appointment-service": {
             required: true
-        },
-        "appointment-message": {
-            required: true,
-            minlength: 10
         }
+       
     },
     messages: {
         "appointment-name": {
@@ -32,27 +27,25 @@ $("#appointment-form").validate({
         "appointment-email": {
             required: "Please enter an email"
         },
-        "appointment-subject": {
-            required: "Please enter a subject"
-        },
+       
         "appointment-date": {
             required: "Please enter a valid date"
         },
         "appointment-service":{
             required: "Please enter a service that you need"
-        },
-        "appointment-message": {
-            required: "Please enter a message you want to send",
-            minlength: "Please enter a valid message"
         }
+       
     },
     submitHandler: function(form, event) {
         event.preventDefault(); // da mi ne submita
         blockUi("body");
         let appointment = serializeForm(form);
         console.log(JSON.stringify(appointment));
+        
 
         appointments.push(appointment);
+
+        
         console.log("APPOINTMENTS = ", appointments);
         $("#appointment-form")[0].reset();
 
