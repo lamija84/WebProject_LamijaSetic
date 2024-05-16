@@ -1,0 +1,220 @@
+
+<style>
+  /* Image container */
+  .image-container {
+      text-align: center;
+  }
+
+  /* Responsive image */
+  .responsive-image {
+      max-width: 100%;
+      height: auto;
+  }
+</style>
+<section id="Status" class="Status section-bg">
+  <div class="container" data-aos="fade-up">
+
+    <div class="section-title">
+      <h2>Status</h2>
+    </div>
+ 
+	
+  <style>
+    /* Stilovi za ljepši izgled tabele */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    tr:hover {
+        background-color: #f2f2f2;
+    }
+</style>
+</head>
+<body>
+<div class="horizontalgap" style ="height:40px"></div> <!--for horizontal space-->
+
+
+<table id="datatable">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+                    </tr>
+    </thead>
+    <tbody id="Status-data">
+        <!-- Status data will be inserted here dynamically -->
+    </tbody>
+</table>
+
+<div class="horizontalgap" style ="height:40px"></div> <!--for horizontal space-->
+<button onclick="showForm()">Add Status</button>
+
+<div class="horizontalgap" style ="height:40px"></div> <!--for horizontal space-->
+<div id="form-overlay" class="overlay">
+    <div class="form-container">
+        <h3>Add new Status</h3>
+        <label for="new-Status-name">Name:</label>
+        <input type="text" id="new-Status-name"><br><br>
+		<button onclick="addStatus()">Add Status</button>
+        <button onclick="hideForm()">Cancel</button>
+    </div>
+</div>
+
+<script>
+function searchTable() {
+  
+    // Implementacija funkcije za pretragu tabele
+    
+    $.each(data, function(index, element) {
+    // Ovdje možete izvršiti željene operacije s elementom
+    console.log("Element " + index + ":", element);
+});
+
+    
+    let Status = localStorage.getItem("Status")
+    
+}
+
+function showForm() {
+    document.getElementById("form-overlay").style.display = "block";
+}
+
+function hideForm() {
+    document.getElementById("form-overlay").style.display = "none";
+}
+
+$.ajax({
+    type: "GET",
+    url: "rest/status",
+    dataType: "json",
+    success: function(data) {
+      displayStatus(data);
+      /*localStorage.setItem("Status", data)
+      $('#searchInput').on('input', function() {
+                var query = $(this).val();
+                searchTable(query, data);
+            });*/
+        },
+        error: function() {
+            alert("json not found.");
+        }
+    });
+  
+function displayStatus(Status) {
+  const table = document.getElementById('Status-data');
+  Status.forEach(Status => {
+      const newRow = table.insertRow();
+      newRow.innerHTML = `<td>${Status.id}</td><td>${Status.name}</td>`;
+  });
+}
+</script>
+<script>
+    
+
+
+
+function addStatus() {
+    var name = document.getElementById("new-Status-name").value;
+    if (name) {
+        // This is where you would make an AJAX call to save the new Status to your server-side database
+		var StatusData = {
+            name: name   };
+		var jsonData = JSON.stringify(StatusData);
+		$.ajax({
+            type: "POST",
+            url: "rest/status/add", // Adjust the URL according to your project structure
+            contentType: "application/json",
+            data: jsonData,
+            dataType: "json",
+            success: function(response) {
+                if (response.success) {
+                    hideForm(); 
+					alert("UPISANO");
+					
+                 } else {
+                 
+                    console.error("Error adding Status:", response.error);
+                 
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX error:", error);
+				alert("greska");
+                
+            }
+        });
+         
+        hideForm();
+		
+    } else {
+        alert("Please enter name of Status.");
+    }
+	location.reload(true);
+}
+
+function deleteSelected() {
+    var selectedStatus = [];
+    $("#datatable input:checkbox").each(function() {
+        if (this.checked) {
+            selectedStatus.push($(this).closest('tr').find('td:first').text()); // Assuming the first column contains the Status ID
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: "rest/status/delete", // Update with your server-side script URL
+        data: { Status: selectedStatus },
+        dataType: "json",
+        success: function(response) {
+            if (response.success) {
+			
+                // Remove selected rows from the table
+                $("#datatable input:checkbox:checked").closest("tr").remove();
+                alert("Obrisano");
+            } else {
+                alert("Failed to delete Status: " + response.error);
+            }
+        },
+        error: function() {
+            alert("Failed to delete Status.");
+        }
+    });
+	location.reload(true);
+}
+
+    $.ajax({
+    type: "GET",
+    url: "rest/status",
+    dataType: "json",
+    success: function(data) {
+        /*searchTable(data);
+        localStorage.setItem("Status", JSON.stringify(data)); // Optionally save data to localStorage*/
+    },
+    error: function() {
+        alert("json not found");
+    }
+});
+
+</script>
+
+
+
+
+
+</body>
+
+</section><!-- End Status Section -->
+      
+          
+<!-- <script>
+ $("#open-modal").click(function(){
+  console.log('jjj')
+  $("#exampleModal").show()
+ });
+ 
+ </script>-->
