@@ -56,17 +56,42 @@
 
     <a
     class="nav-icon position-relative text-decoration-none"
-    href="tpl/login.html"
+    href="login/index.html"
   >
     <i class="fa fa-fw fa-user text-dark mr-3"></i>
   </a>
     <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt=""></a>
+    <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle"
+          id="navbarDropdown"
+          href="login/index.html"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+          ><i class="fas fa-user fa-fw"></i
+        ></a>
+        <ul
+          class="dropdown-menu dropdown-menu-end"
+          aria-labelledby="navbarDropdown"
+        >
+          <li><a class="dropdown-item" href="#!">Settings</a></li>
+          <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+          <li><hr class="dropdown-divider" /></li>
+          <li>
+            <a class="dropdown-item" onclick="Utils.logout()">Logout</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
     <!-- Uncomment below if you prefer to use an image logo -->
     <!-- <h1 class="logo me-auto"><a href="index.html">Medicio</a></h1> -->
 
     <nav id="navbar" class="navbar order-last order-lg-0">
       <ul>
-        <li><a class="nav-link" href="#home1">Home</a></li>
+        <li><a class="nav-link" href="#home">Home</a></li>
         <li><a class="nav-link" href="#about">About</a></li>
         <li><a class="nav-link" href="#services">Services</a></li>
         <li><a class="nav-link" href="#departments">Departments</a></li>
@@ -93,7 +118,7 @@
 	<section id="patient" data-load="patient.html"></section>
 	<section id="contact" data-load="contact.html"></section>
     <section id="apointment" data-load="apointment.html" ></section>
-    <section id="login" data-load="login.html"></section>
+    <section id="login" data-load="assets/login/index.html"></section>
     <section id="register" data-load="register.html"></section>
     <section id="home" data-load="home.html"></section>
 	<section id="status" data-load="status.html"></section>
@@ -152,10 +177,17 @@
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="assets/js/custom.js"></script>
 <script src="assets/js/jquery.spapp.js"></script>
+<script src="assets/utils/utils.js"></script>
+<script src="assets/utils/rest_client.js"></script>
+<script src="assets/utils/constants.js"></script>
 
 
+<!--<script src="assets/utils/utils.js"></script>
+<script src="assets/utils/constants.js"></script>
+<script src="assets/utils/form_validation.js"></script>
+<script src="assets/utils/rest_client.js"></script>
 
-<!--<script src="assets/js/jquery-blockUI.js"></script>
+<script src="assets/js/jquery-blockUI.js"></script>
 <script src="assets/js/jquery.validate.js"></script>
 <script src="assets/js/contact.js"></script>
  End Script -->
@@ -164,7 +196,13 @@
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 
-
+  <script>
+    if (Utils.get_from_localstorage("user")) {
+      Utils.init_spapp();
+    } else {
+      window.location = "login";
+    }
+  </script>
 </body>
 
 </html>

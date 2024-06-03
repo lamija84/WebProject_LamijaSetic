@@ -92,6 +92,14 @@ $.ajax({
     type: "GET",
     url: "rest/status",
     dataType: "json",
+    beforeSend: function (xhr) {
+        if (JSON.parse(window.localStorage.getItem("user"))) {
+          xhr.setRequestHeader(
+            "Authentication",
+            JSON.parse(window.localStorage.getItem("user")).token
+          );
+        }
+      },
     success: function(data) {
       displayStatus(data);
       /*localStorage.setItem("Status", data)
@@ -131,6 +139,14 @@ function addStatus() {
             contentType: "application/json",
             data: jsonData,
             dataType: "json",
+            beforeSend: function (xhr) {
+        if (JSON.parse(window.localStorage.getItem("user"))) {
+          xhr.setRequestHeader(
+            "Authentication",
+            JSON.parse(window.localStorage.getItem("user")).token
+          );
+        }
+      },
             success: function(response) {
                 if (response.success) {
                     hideForm(); 
@@ -170,6 +186,14 @@ function deleteSelected() {
         url: "rest/status/delete", // Update with your server-side script URL
         data: { Status: selectedStatus },
         dataType: "json",
+        beforeSend: function (xhr) {
+        if (JSON.parse(window.localStorage.getItem("user"))) {
+          xhr.setRequestHeader(
+            "Authentication",
+            JSON.parse(window.localStorage.getItem("user")).token
+          );
+        }
+      },
         success: function(response) {
             if (response.success) {
 			
@@ -191,6 +215,14 @@ function deleteSelected() {
     type: "GET",
     url: "rest/status",
     dataType: "json",
+    beforeSend: function (xhr) {
+        if (JSON.parse(window.localStorage.getItem("user"))) {
+          xhr.setRequestHeader(
+            "Authentication",
+            JSON.parse(window.localStorage.getItem("user")).token
+          );
+        }
+      },
     success: function(data) {
         /*searchTable(data);
         localStorage.setItem("Status", JSON.stringify(data)); // Optionally save data to localStorage*/

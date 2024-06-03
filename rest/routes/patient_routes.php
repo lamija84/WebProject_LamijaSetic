@@ -9,6 +9,9 @@ Flight::set('PatientService', new PatientService());
  *      path="/patients/add",
  *      tags={"patients"},
  *      summary="Add patient",
+ *  security={
+     *          {"ApiKey": {}}   
+     *      },
  *      @OA\Response(
  *           response=200,
  *           description="Patient added successfully"
@@ -16,9 +19,12 @@ Flight::set('PatientService', new PatientService());
  *      @OA\RequestBody(
  *          description="Patient details",
  *          @OA\JsonContent(
- *             required={"name", "surname"},
- *             @OA\Property(property="name", type="string", example="Lamija"),
- *             @OA\Property(property="surname", type="string", example="Setic"),
+ *         required={"name", "surname","email", "password"},
+ *             @OA\Property(property="patient_id", type="string", example="1", description="Patient ID"),
+ *             @OA\Property(property="name", type="string", example="Some name",description="Patient name ),
+ *             @OA\Property(property="surname", type="string", example="Some surname",description="Patient surname ),
+ *             @OA\Property(property="email", type="string", example="example@example.com", description="Patient email address"),
+ *             @OA\Property(property="password", type="string", example="some_secret_password", description="Patient password")
  *          
  *             
  *     
@@ -26,20 +32,23 @@ Flight::set('PatientService', new PatientService());
  *      ),
  * )
  */
+Flight::route('POST /add', function() {
+    $payload = Flight::request()->data->getData();
 
-Flight::route('POST /patients/add', function(){
-   
-    $data = Flight::request()->data->getData();
-
-    try {
-        $newPatient = Flight::get('PatientService')->add_patient($data);
-        
-        Flight::json(["success" => true, "patient" => $newPatient]);
-    } catch (Exception $e) {
-       
-        Flight::json(["success" => false, "error" => $e->getMessage()]);
+    if($payload['first_name'] == NULL || $payload['first_name'] == '') {
+        Flight::halt(500, "First name field is missing");
     }
+
+    if($payload['id'] != NULL && $payload['id'] != ''){
+        $patient = Flight::get('PatientService')->edit_patient($payload);
+    } else {
+        unset($payload['id']);
+        $patient = Flight::get('PatientService')->add_patient($payload);
+    }
+
+    Flight::json(['message' => "You have successfully added the patient", 'data' => $patient]);
 });
+
 
 /**
  * @OA\Post(
@@ -59,6 +68,9 @@ Flight::route('POST /patients/add', function(){
  *              )
  *          )
  *      ),
+ *  security={
+     *          {"ApiKey": {}}   
+     *      },
  *      @OA\Response(
  *          response=200,
  *          description="Success response",
@@ -86,7 +98,7 @@ Flight::route('POST /patients/delete', function(){
     try {
        
         foreach ($selectedPatients as $patientId) {
-            $PatientService->delete_patient_by_id($patientId); 
+            $PatientService->delete_patient_by_id($patientId); //$patientId['patient_id'];
         }
 
        
@@ -96,10 +108,12 @@ Flight::route('POST /patients/delete', function(){
         Flight::json(["success" => false, "error" => $e->getMessage()]);
     }
 });
-
 /**
  * @OA\Get(path="/patients", tags={"patients"}, 
  *         summary="Return all patients from the API. ",
+ *  security={
+     *          {"ApiKey": {}}   
+     *      },
  *         @OA\Response( response=200, description="List of patients.")
  * )
  */
@@ -114,3 +128,21 @@ Flight::route('GET /patients', function(){
     }
 
 });
+   /**
+     * @OA\Get(
+     *      path="/patients/info",
+     *      tags={"patients"},
+     *      summary="Get patients details",
+     *      security={
+     *          {"ApiKey": {}}   
+     *      },
+     *      @OA\Response(
+     *           response=200,
+     *           description="Patient details"
+     *      )
+     * )
+     */
+    Flight::route('GET /patients/info', function() {
+    
+        Flight::json(Flight::get('PatientService')->get_patient_by_id(Flight::get('user')->patient_id)); //('user')
+    });

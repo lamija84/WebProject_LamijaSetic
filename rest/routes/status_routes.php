@@ -8,6 +8,9 @@ Flight::set('StatusService', new StatusService());
  *      path="/status/add",
  *      tags={"status"},
  *      summary="Add status",
+ *  security={
+     *          {"ApiKey": {}}   
+     *      },
  *      @OA\Response(
  *           response=200,
  *           description="Status added successfully"
@@ -43,6 +46,9 @@ Flight::route('POST /status/add', function(){
 /**
  * @OA\Get(path="/status", tags={"status"}, 
  *         summary="Return all statuses from the API. ",
+ *  security={
+     *          {"ApiKey": {}}   
+     *      },
  *         @OA\Response( response=200, description="List of statuses.")
  * )
  */

@@ -1,6 +1,6 @@
 var UserService = {
     reload_user_datatable: function() {
-        Utils.get_datatable("admin-table-users", Constants.API_BASE_URL + "users", // Pretpostavka: API ruta za dobavljanje korisnika
+        Utils.get_datatable("admin-table-users",  Constants.get_api_base_url() + "users", // Pretpostavka: API ruta za dobavljanje korisnika
             [
                 { data: "action" }, // Pretpostavka: kolona sa akcijama (brisanje)
                 { data: "id" }, // Pretpostavka: kolona za ID korisnika

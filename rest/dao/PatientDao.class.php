@@ -38,7 +38,8 @@ class PatientDao extends BaseDao
     return $this->get_patients(0, PHP_INT_MAX, '', 'patient_id', 'ASC');
   }
   public function get_patient_by_id($patient_id){
-    return $this->query_unique("SELECT * FROM patients WHERE patient_id = :id", ["id" => $patient_id]);
+    $a =  $this->query_unique("SELECT * FROM patients WHERE patient_id = :id", ["id" => $patient_id]);
+    print_r($a); die;
   }
 
   public function delete_patient_by_id($patient_id) {

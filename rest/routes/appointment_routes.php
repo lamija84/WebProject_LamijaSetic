@@ -19,6 +19,9 @@ Flight::set('AppointmentService', new AppointmentService());
  *             @OA\Property(property="status", type="integer", type="integer", example=1)
  *          )
  *      ),
+ *  security={
+     *          {"ApiKey": {}}   
+     *      },
  *      @OA\Response(
  *           response=200,
  *           description="Appointment added successfully"

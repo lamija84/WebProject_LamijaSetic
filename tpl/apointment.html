@@ -105,6 +105,14 @@
         type: "GET",
         url: "rest/patients",
         dataType: "json",
+        beforeSend: function (xhr) {
+        if (JSON.parse(window.localStorage.getItem("user"))) {
+          xhr.setRequestHeader(
+            "Authentication",
+            JSON.parse(window.localStorage.getItem("user")).token
+          );
+        }
+      },
         success: function(data) {
           var select = document.getElementById("pacijent");
           data.forEach(function(pacijent) {
@@ -123,6 +131,14 @@
         type: "GET",
         url: "rest/status",
         dataType: "json",
+        beforeSend: function (xhr) {
+        if (JSON.parse(window.localStorage.getItem("user"))) {
+          xhr.setRequestHeader(
+            "Authentication",
+            JSON.parse(window.localStorage.getItem("user")).token
+          );
+        }
+      },
         success: function(data) {
           var select = document.getElementById("status1");
           data.forEach(function(status) {
@@ -141,6 +157,14 @@
         type: "GET",
         url: "rest/doctors",
         dataType: "json",
+        beforeSend: function (xhr) {
+        if (JSON.parse(window.localStorage.getItem("user"))) {
+          xhr.setRequestHeader(
+            "Authentication",
+            JSON.parse(window.localStorage.getItem("user")).token
+          );
+        }
+      },
         success: function(data) {
           var select = document.getElementById("doctor");
           data.forEach(function(doctor) {
@@ -177,6 +201,14 @@
           contentType: "application/json",
           data: jsonData,
           dataType: "json",
+          beforeSend: function (xhr) {
+        if (JSON.parse(window.localStorage.getItem("user"))) {
+          xhr.setRequestHeader(
+            "Authentication",
+            JSON.parse(window.localStorage.getItem("user")).token
+          );
+        }
+      },
           success: function(response) {
             if (response.success) {
               alert("UPISANO");

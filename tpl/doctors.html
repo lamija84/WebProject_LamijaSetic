@@ -130,6 +130,14 @@
       type: "GET",
       url: "rest/doctors",
       dataType: "json",
+      beforeSend: function (xhr) {
+        if (JSON.parse(window.localStorage.getItem("user"))) {
+          xhr.setRequestHeader(
+            "Authentication",
+            JSON.parse(window.localStorage.getItem("user")).token
+          );
+        }
+      },
       success: function(data) {
         displayDoctors(data);
         /*localStorage.setItem("doctors", data)
@@ -157,6 +165,14 @@
               type: "GET",
               url: "rest/doctors",
               dataType: "json",
+              beforeSend: function (xhr) {
+        if (JSON.parse(window.localStorage.getItem("user"))) {
+          xhr.setRequestHeader(
+            "Authentication",
+            JSON.parse(window.localStorage.getItem("user")).token
+          );
+        }
+      },
               success: function(data) {
                   displayDoctorsImages(data);
               },
@@ -208,6 +224,14 @@
               contentType: "application/json",
               data: jsonData,
               dataType: "json",
+              beforeSend: function (xhr) {
+        if (JSON.parse(window.localStorage.getItem("user"))) {
+          xhr.setRequestHeader(
+            "Authentication",
+            JSON.parse(window.localStorage.getItem("user")).token
+          );
+        }
+      },
               success: function(response) {
                   if (response.success) {
                       hideForm(); 
@@ -247,6 +271,14 @@
           url: "rest/doctors/delete", // Update with your server-side script URL
           data: { doctors: selectedDoctors },
           dataType: "json",
+          beforeSend: function (xhr) {
+        if (JSON.parse(window.localStorage.getItem("user"))) {
+          xhr.setRequestHeader(
+            "Authentication",
+            JSON.parse(window.localStorage.getItem("user")).token
+          );
+        }
+      },
           success: function(response) {
               if (response.success) {
               

@@ -1,4 +1,4 @@
-let logins = [];
+/*let logins = [];
 
 $("#login-form").validate({
     rules: {
