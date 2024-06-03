@@ -1,6 +1,6 @@
 var AppointmentService = {
     reload_appointment_datatable: function() {
-        Utils.get_datatable("admin-table-appointments", Constants.API_BASE_URL + "appointments",
+        Utils.get_datatable("admin-table-appointments",  Constants.get_api_base_url() + "appointments",
             [
                 { data: "action" }, // Pretpostavka: kolona sa akcijama (brisanje, izmena)
                 { data: "patient_id" }, // Pretpostavka: kolona za ID pacijenta

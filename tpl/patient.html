@@ -1,252 +1,305 @@
 
 <style>
-    /* Image container */
-    .image-container {
-        text-align: center;
+  /* Image container */
+  .image-container {
+      text-align: center;
+  }
+
+  /* Responsive image */
+  .responsive-image {
+      max-width: 100%;
+      height: auto;
+  }
+</style>
+<section id="Patients1" class="Patients section-bg">
+  <div class="container" data-aos="fade-up">
+
+    <div class="section-title">
+      <h2>Patients</h2>
+    </div>
+ 
+	
+  <style>
+    /* Stilovi za ljepši izgled tabele */
+    table {
+        width: 100%;
+        border-collapse: collapse;
     }
-  
-    /* Responsive image */
-    .responsive-image {
-        max-width: 100%;
-        height: auto;
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
     }
-  </style>
-  <section id="Patients1" class="Patients section-bg">
-    <div class="container" data-aos="fade-up">
+    tr:hover {
+        background-color: #f2f2f2;
+    }
+</style>
+</head>
+<body>
+<div class="horizontalgap" style ="height:40px"></div> <!--for horizontal space-->
+<div class="form-outline mb-4">
+    <input type="text" class="form-control" id="datatable-search-input" onkeyup="searchTable()" placeholder="Search Patients...">
+    <!--<label class="form-label" for="datatable-search-input"></label>-->
+</div>
+
+<table id="datatable">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Email</th>
+            <th>Password</th>
+
+        </tr>
+    </thead>
+    <tbody id="Patient-data">
+        <!-- Patients data will be inserted here dynamically -->
+    </tbody>
+</table>
+
+<div class="horizontalgap" style ="height:40px"></div> <!--for horizontal space-->
+<button onclick="showForm()">Add Patient</button>
+<button onclick="deleteSelected()" id="delete-selected">Delete selected</button>
+<div class="horizontalgap" style ="height:40px"></div> <!--for horizontal space-->
+<div id="form-overlay" class="overlay">
+    <div class="form-container">
+        <h3>Add new Patient</h3>
+        <label for="new-Patient-name">Name:</label>
+        <input type="text" id="new-Patient-name"><br><br>
+        <label for="new-Patient-surname">Surname:</label>
+        <input type="text" id="new-Patient-surname"><br><br>
+        <label for="new-Patient-email">Email:</label>
+        <input type="text" id="new-Patient-email"><br><br>
+        <label for="new-Patient-password">Password:</label>
+        <input type="password" id="new-Patient-password"><br><br>
+		<button onclick="addPatient()">Add Patient</button>
+        <button onclick="hideForm()">Cancel</button>
+    </div>
+</div>
+
+<script>
+function searchTable() {
   
-      <div class="section-title">
-        <h2>Patients</h2>
-      </div>
-   
-      
-    <style>
-      /* Stilovi za ljepši izgled tabele */
-      table {
-          width: 100%;
-          border-collapse: collapse;
-      }
-      th, td {
-          padding: 8px;
-          text-align: left;
-          border-bottom: 1px solid #ddd;
-      }
-      tr:hover {
-          background-color: #f2f2f2;
-      }
-  </style>
-  </head>
-  <body>
-  <div class="horizontalgap" style ="height:40px"></div> <!--for horizontal space-->
-  <div class="form-outline mb-4">
-    <input type="text" id="searchInput" oninput="searchTable(this.value)" placeholder="Pretraga po prezimenu">
-  
-      <!--<label class="form-label" for="datatable-search-input"></label>-->
-  </div>
-  
-  <table id="datatable">
-      <thead>
-          <tr>
-              <th>Id</th>
-              <th>Name</th>
-              <th>Surname</th>
-          </tr>
-      </thead>
-      <tbody id="Patient-data">
-          <!-- Patients data will be inserted here dynamically -->
-      </tbody>
-  </table>
-  
-  <div class="horizontalgap" style ="height:40px"></div> <!--for horizontal space-->
-  <button onclick="showForm()">Add Patient</button>
-  <button onclick="deleteSelected()" id="delete-selected">Delete selected</button>
-  <div class="horizontalgap" style ="height:40px"></div> <!--for horizontal space-->
-  <div id="form-overlay" class="overlay">
-      <div class="form-container">
-          <h3>Add new Patient</h3>
-          <label for="new-Patient-name">Name:</label>
-          <input type="text" id="new-Patient-name"><br><br>
-          <label for="new-Patient-surname">Surname:</label>
-          <input type="text" id="new-Patient-surname"><br><br>
-          <button onclick="addPatient()">Add Patient</button>
-          <button onclick="hideForm()">Cancel</button>
-      </div>
-  </div>
-  
-  <script>
-  function searchTable(query) {
-      
-      query = query.toLowerCase();
-      
-      
-      var table = document.getElementById('doctor-data');
-      
-      
-      var rows = table.getElementsByTagName('tr');
-      
-       
-      for (var i = 0; i < rows.length; i++) {
-          var row = rows[i];
-          
-           
-          var cell = row.getElementsByTagName('td')[2]; //  
-          
-           
-          if (cell.textContent.toLowerCase().indexOf(query) > -1) {
-              
-              row.style.display = '';
-          } else {
-               
-              row.style.display = 'none';
-          }
-      }
-  }
-  
-  
-      
-      //let Patients = localStorage.getItem("Patients")
-      
-  
-  
-  function showForm() {
-      document.getElementById("form-overlay").style.display = "block";
-  }
-  
-  function hideForm() {
-      document.getElementById("form-overlay").style.display = "none";
-  }
-  
-  $.ajax({
-      type: "GET",
-      url: "rest/patients",
-      dataType: "json",
-      success: function(data) {
-        displayPatients(data);
-        /*localStorage.setItem("Patients", data)
-        $('#searchInput').on('input', function() {
-                  var query = $(this).val();
-                  searchTable(query, data);
-              });*/
-          },
-          error: function() {
-              alert("json not found.");
-          }
-      });
+    // Implementacija funkcije za pretragu tabele
     
-  function displayPatients(Patients) {
-    const table = document.getElementById('Patient-data');
-    Patients.forEach(Patient => {
-        const newRow = table.insertRow();
-        newRow.innerHTML = `<td>${Patient.patient_id}</td><td>${Patient.name}</td><td>${Patient.surname}</td><td><input type='checkbox'></td>`;
-    });
-  }
-  </script>
-  <script>
-      
-  
-  
-  
-  function addPatient() {
-      var name = document.getElementById("new-Patient-name").value;
-      var surname = document.getElementById("new-Patient-surname").value;
-      
-      if (name && surname) {
-          // This is where you would make an AJAX call to save the new Patient to your server-side database
-          // For demonstration purposes, let's just log the new Patient's name and surname
-          var PatientData = {
-              name: name,
-              surname: surname   };
-          var jsonData = JSON.stringify(PatientData);
-          $.ajax({
-              type: "POST",
-              url: "rest/patients/add", // Adjust the URL according to your project structure
-              contentType: "application/json",
-              data: jsonData,
-              dataType: "json",
-              success: function(response) {
-                  if (response.success) {
-                      hideForm(); 
-                      alert("UPISANO");
-                      displayPatientsImages(Patients);
-                      displayPatients(Patients);
-                   } else {
-                   
-                      console.error("Error adding Patient:", response.error);
-                   
-                  }
-              },
-              error: function(xhr, status, error) {
-                  console.error("AJAX error:", error);
-                  
-              }
-          });
-          hideForm();
-          
-      } else {
-          alert("Please enter name and surname of Patient.");
-      }
-      location.reload(true);
-  }
-  
-  function deleteSelected() {
-      var selectedPatients = [];
-      $("#datatable input:checkbox").each(function() {
-          if (this.checked) {
-              selectedPatients.push($(this).closest('tr').find('td:first').text()); // Assuming the first column contains the Patient ID
-          }
-        
-      });
-  
-      $.ajax({
-          type: "POST",
-          url: "rest/patients/delete", // Update with your server-side script URL
-          data: { patients: selectedPatients },
-          dataType: "json",
-          success: function(response) {
-              displayPatients()
-              if (response.success) {
-              
-                  // Remove selected rows from the table
-                  $("#datatable input:checkbox:checked").closest("tr").remove();
-                  alert("Obrisano");
-              } else {
-                  alert("Failed to delete Patients: " + response.error);
-              }
-          },
-          error: function() {
-              alert("Failed to delete Patients.");
-          }
-      });
-       location.reload(true);
-  }
-  
-      $.ajax({
-      type: "GET",
-      url: "rest/patients",
-      dataType: "json",
-      success: function(data) {
-          /*searchTable(data);
-          localStorage.setItem("Patients", JSON.stringify(data)); // Optionally save data to localStorage*/
+    $.each(data, function(index, element) {
+    // Ovdje možete izvršiti željene operacije s elementom
+    console.log("Element " + index + ":", element);
+});
+
+    
+    let Patients = localStorage.getItem("Patients")
+    
+}
+
+function showForm() {
+    document.getElementById("form-overlay").style.display = "block";
+}
+
+function hideForm() {
+    document.getElementById("form-overlay").style.display = "none";
+}
+
+$.ajax({
+    type: "GET",
+    url: "rest/patients",
+    dataType: "json",
+    beforeSend: function (xhr) {
+        if (JSON.parse(window.localStorage.getItem("user"))) {
+          xhr.setRequestHeader(
+            "Authentication",
+            JSON.parse(window.localStorage.getItem("user")).token
+          );
+        }
       },
-      error: function() {
-          alert("json not found");
-      }
+    success: function(data) {
+      displayPatients(data);
+      /*localStorage.setItem("Patients", data)
+      $('#searchInput').on('input', function() {
+                var query = $(this).val();
+                searchTable(query, data);
+            });*/
+        },
+        error: function() {
+            alert("json not found.");
+        }
+    });
+  
+function displayPatients(Patients) {
+  const table = document.getElementById('Patient-data');
+  Patients.forEach(Patient => {
+      const newRow = table.insertRow();
+      newRow.innerHTML = `<td>${Patient.patient_id}</td><td>${Patient.name}</td><td>${Patient.surname}</td><td>${Patient.email}</td><td>${Patient.password}</td><td><input type='checkbox'></td>`;
   });
-  
-  </script>
-  
-  
-  
-  
-  
-  </body>
-  
-  </section><!-- End Patients Section -->
+}
+</script>
+<script>
+    
+
+
+
+function addPatient() {
+    var name = document.getElementById("new-Patient-name").value;
+    var surname = document.getElementById("new-Patient-surname").value;
+    var email=document.getElementById("new-Patient-email").value;
+    var password=document.getElementById("new-Patient-password").value;
+	
+    if (name, surname, email && password) {
+        // This is where you would make an AJAX call to save the new Patient to your server-side database
+        // For demonstration purposes, let's just log the new Patient's name and surname
+		var PatientData = {
+            name: name,
+            surname: surname,
+            email: email,
+            password: password   };
+		var jsonData = JSON.stringify(PatientData);
+		$.ajax({
+            type: "POST",
+            url: "rest/patients/add", // Adjust the URL according to your project structure
+            contentType: "application/json",
+            data: jsonData,
+            dataType: "json",
+            beforeSend: function (xhr) {
+        if (JSON.parse(window.localStorage.getItem("user"))) {
+          xhr.setRequestHeader(
+            "Authentication",
+            JSON.parse(window.localStorage.getItem("user")).token
+          );
+        }
+      },
+            success: function(response) {
+                if (response.success) {
+                    hideForm(); 
+					alert("UPISANO");
+					displayPatientsImages(Patients);
+					displayPatients(Patients);
+                 } else {
+                 
+                    console.error("Error adding Patient:", response.error);
+                 
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX error:", error);
+                
+            }
+        });
+        hideForm();
+		
+    } else {
+        alert("Please enter name and surname of Patient.");
+    }
+}
+
+function deleteSelected() {
+    var selectedPatients = [];
+    $("#datatable input:checkbox").each(function() {
+        if (this.checked) {
+            selectedPatients.push($(this).closest('tr').find('td:first').text()); // Assuming the first column contains the Patient ID
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: "rest/patients/delete", // Update with your server-side script URL
+        data: { patients: selectedPatients },
+        dataType: "json",
+        beforeSend: function (xhr) {
+        if (JSON.parse(window.localStorage.getItem("user"))) {
+          xhr.setRequestHeader(
+            "Authentication",
+            JSON.parse(window.localStorage.getItem("user")).token
+          );
+        }
+      },
+    
+        success: function(response) {
+            displayPatients()
+            if (response.success) {
+			
+                // Remove selected rows from the table
+                $("#datatable input:checkbox:checked").closest("tr").remove();
+                alert("Obrisano");
+            } else {
+                alert("Failed to delete Patients: " + response.error);
+            }
+        },
+        error: function() {
+            alert("Failed to delete Patients.");
+        }
+    });
+	 location.reload(true);
+}
+
+    $.ajax({
+    type: "GET",
+    url: "rest/patients",
+    dataType: "json",
+    beforeSend: function (xhr) {
+        if (JSON.parse(window.localStorage.getItem("user"))) {
+          xhr.setRequestHeader(
+            "Authentication",
+            JSON.parse(window.localStorage.getItem("user")).token
+          );
+        }
+      },
+    success: function(data) {
+        /*searchTable(data);
+        localStorage.setItem("Patients", JSON.stringify(data)); // Optionally save data to localStorage*/
+    },
+    error: function() {
+        alert("json not found");
+    }
+});
+/*$("#form-outline mb-4").validate({
+    rules: {
+        "form-name": {
+            required: true,
         
-            
-  <!-- <script>
-   $("#open-modal").click(function(){
-    console.log('jjj')
-    $("#exampleModal").show()
-   });
-   
-   </script>-->
+        },
+        "form-email": {
+            required: true,
+            email: true
+        },
+        "form-surname": {
+            required: true
+        },
+        "form-password": {
+            required: true,
+            minlength: 5
+        }
+    },
+    messages: {
+        "form-name": {
+            required: "Please enter your name"
+        },
+        "form-email": {
+            required: "Please enter an email"
+        },
+        "form-surname": {
+            required: "Please enter your surname"
+        },
+        "form-password": {
+            minlength: "Please enter a valid password, min. 5 charachters"
+        }
+    }
+});*/
+</script>
+
+
+
+
+
+</body>
+
+</section><!-- End Patients Section -->
+      
+          
+<!-- <script>
+ $("#open-modal").click(function(){
+  console.log('jjj')
+  $("#exampleModal").show()
+ });
+ 
+ </script>

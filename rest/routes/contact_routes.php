@@ -14,6 +14,9 @@ Flight::set('ContactService', new ContactService());
  *           response=200,
  *           description="Contact added successfully"
  *      ),
+ *  security={
+     *          {"ApiKey": {}}   
+     *      },
  *      @OA\RequestBody(
  *          description="Contact details",
  *          @OA\JsonContent(

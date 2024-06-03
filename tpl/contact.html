@@ -150,6 +150,14 @@
             contentType: "application/json",
             data: jsonData,
             dataType: "json",
+            beforeSend: function (xhr) {
+        if (JSON.parse(window.localStorage.getItem("user"))) {
+          xhr.setRequestHeader(
+            "Authentication",
+            JSON.parse(window.localStorage.getItem("user")).token
+          );
+        }
+      },
             success: function(response) {
                 if (response.success) {
                     

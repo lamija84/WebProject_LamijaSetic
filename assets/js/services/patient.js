@@ -25,7 +25,7 @@ var PatientService = {
     reload_patients_table: function() {
       Utils.get_datatable(
         "tbl_patients",
-        Constants.API_BASE_URL + "patients/add", // Pretpostavka: API za dobavljanje pacijenata
+        Constants.get_api_base_url() + "patients/add", // Pretpostavka: API za dobavljanje pacijenata
         [
           { data: "action" }, // Pretpostavka: kolona sa akcijama (izmena, brisanje)
           { data: "name" }, // Pretpostavka: kolona za ime pacijenta
