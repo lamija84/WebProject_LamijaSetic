@@ -29,13 +29,13 @@ class Config {
         return Config::get_env("DB_USER", 'root');
     }
     public static function DB_PASSWORD() {
-        return Config::get_env("DB_PASSWORD", '12345');
+        return Config::get_env("DB_PASSWORD", '');
     }
     public static function DB_HOST() {
         return Config::get_env("DB_HOST", '127.0.0.1');
     }
     public static function JWT_SECRET() {
-        return Config::get_env("DB_HOST", '?VX3ppL/7=]Wvv1F2rL={FfZQ!dW@R');
+        return Config::get_env("JWT_SECRET", '?VX3ppL/7=]Wvv1F2rL={FfZQ!dW@R');
     }
     public static function get_env($name, $default){
         return isset($_ENV[$name]) && trim($_ENV[$name]) != "" ? $_ENV[$name] : $default;

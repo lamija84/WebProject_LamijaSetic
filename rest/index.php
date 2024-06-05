@@ -22,8 +22,17 @@ require_once __DIR__ . '/routes/appointment_routes.php';
 require_once __DIR__ . '/../rest/dao/AuthDao.class.php';
 require_once __DIR__ . '/routes/auth_routes.php';
 
-
+Flight::route('GET /', function(){
+  echo 'Hello World!';
+});
 Flight::start();
+/*$env = getenv('DB_NAME');
+
+  if ($env != null) {
+      header("Location: /index.html");
+  } else {
+      header("Location: /WebProject_LamijaSetic_new/index.html");
+  }
 
 /* ovdje je poziv klase i pocetne stracnice prema uputstvu sa net-a 
 require_once __DIR__ . '/vendor/flightphp/core/flight/Flight.php'; 

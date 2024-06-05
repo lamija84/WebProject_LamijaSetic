@@ -8,7 +8,8 @@ use Firebase\JWT\Key;
 Flight::route('/*', function() {
     if(
         strpos(Flight::request()->url, '/auth/login') === 0 ||
-        strpos(Flight::request()->url, '/auth/register') === 0
+        strpos(Flight::request()->url, '/auth/register') === 0 ||
+        strpos(Flight::request()->url, '/') === 0 
     ) {
         return TRUE;
     } else {
