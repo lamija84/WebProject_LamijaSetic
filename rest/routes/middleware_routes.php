@@ -3,13 +3,13 @@
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
-//use PSpell\Config;
+
 
 Flight::route('/*', function() {
     if(
         strpos(Flight::request()->url, '/auth/login') === 0 ||
-        strpos(Flight::request()->url, '/auth/register') === 0 ||
-        strpos(Flight::request()->url, '/') === 0 
+        strpos(Flight::request()->url, '/auth/register') === 0 
+        
     ) {
         return TRUE;
     } else {
